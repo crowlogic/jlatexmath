@@ -48,20 +48,27 @@ package org.scilab.forge.jlatexmath;
 /**
  * An atom with representing an IJ.
  */
-public class IJAtom extends Atom {
+public class IJAtom extends
+                    Atom
+{
 
-    private boolean upper;
+  private boolean upper;
 
-    public IJAtom(boolean upper) {
-        this.upper = upper;
-    }
+  public IJAtom(boolean upper)
+  {
+    this.upper = upper;
+  }
 
-    public Box createBox(TeXEnvironment env) {
-        CharBox I = new CharBox(env.getTeXFont().getChar(upper ? 'I' : 'i', "mathnormal", env.getStyle()));
-        CharBox J = new CharBox(env.getTeXFont().getChar(upper ? 'J' : 'j', "mathnormal", env.getStyle()));
-        HorizontalBox hb = new HorizontalBox(I);
-        hb.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.065f, 0, 0).createBox(env));
-        hb.add(J);
-        return hb;
-    }
+  public Box createBox(TeXEnvironment env)
+  {
+    CharBox       I  = new CharBox(env.getTeXFont().getChar(upper ? 'I' : 'i', "mathnormal", env.getStyle()));
+    CharBox       J  = new CharBox(env.getTeXFont().getChar(upper ? 'J' : 'j', "mathnormal", env.getStyle()));
+    HorizontalBox hb = new HorizontalBox(I);
+    hb.add(new SpaceAtom(TeXConstants.UNIT_EM,
+                         -0.065f,
+                         0,
+                         0).createBox(env));
+    hb.add(J);
+    return hb;
+  }
 }

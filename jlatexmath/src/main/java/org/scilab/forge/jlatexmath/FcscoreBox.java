@@ -54,64 +54,74 @@ import java.awt.geom.Line2D;
 /**
  * A box representing glue.
  */
-public class FcscoreBox extends Box {
+public class FcscoreBox extends
+                        Box
+{
 
-    private int N;
-    private boolean strike;
-    private float space;
-    private float thickness;
+  private int     N;
+  private boolean strike;
+  private float   space;
+  private float   thickness;
 
-    public FcscoreBox(int N, float h, float thickness, float space, boolean strike) {
-        this.N = N;
-        this.width = N * (thickness + space) + 2 * space;
-        this.height = h;
-        this.depth = 0;
-        this.strike = strike;
-        this.space = space;
-        this.thickness = thickness;
+  public FcscoreBox(int N, float h, float thickness, float space, boolean strike)
+  {
+    this.N         = N;
+    this.width     = N * (thickness + space) + 2 * space;
+    this.height    = h;
+    this.depth     = 0;
+    this.strike    = strike;
+    this.space     = space;
+    this.thickness = thickness;
+  }
+
+  public void draw(Graphics2D g2, float x, float y)
+  {
+    AffineTransform transf    = g2.getTransform();
+    Stroke          oldStroke = g2.getStroke();
+
+    final double    sx        = transf.getScaleX();
+    final double    sy        = transf.getScaleY();
+    double          s         = 1;
+    if (sx == sy)
+    {
+      // There are rounding problems due to scale factor: lines could have different
+      // spacing...
+      // So the increment (space+thickness) is done in using integer.
+      s = sx;
+      AffineTransform t = (AffineTransform) transf.clone();
+      t.scale(1 / sx, 1 / sy);
+      g2.setTransform(t);
     }
 
-    public void draw(Graphics2D g2, float x, float y) {
-        AffineTransform transf = g2.getTransform();
-        Stroke oldStroke = g2.getStroke();
+    g2.setStroke(new BasicStroke((float) (s * thickness),
+                                 BasicStroke.CAP_BUTT,
+                                 BasicStroke.JOIN_MITER));
+    float              th   = thickness / 2.f;
+    final Line2D.Float line = new Line2D.Float();
+    float              xx   = x + space;
+    xx = (float) (xx * s + (space / 2.f) * s);
+    final int inc = (int) Math.round((space + thickness) * s);
 
-        final double sx = transf.getScaleX();
-        final double sy = transf.getScaleY();
-        double s = 1;
-        if (sx == sy) {
-            // There are rounding problems due to scale factor: lines could have different
-            // spacing...
-            // So the increment (space+thickness) is done in using integer.
-            s = sx;
-            AffineTransform t = (AffineTransform) transf.clone();
-            t.scale(1 / sx, 1 / sy);
-            g2.setTransform(t);
-        }
-
-        g2.setStroke(new BasicStroke((float) (s * thickness), BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));
-        float th = thickness / 2.f;
-        final Line2D.Float line = new Line2D.Float();
-        float xx = x + space;
-        xx = (float) (xx * s + (space / 2.f) * s);
-        final int inc = (int) Math.round((space + thickness) * s);
-
-        for (int i = 0; i < N; i++) {
-            line.setLine(xx + th * s, (y - height) * s, xx + th * s, y * s);
-            g2.draw(line);
-            xx += inc;
-        }
-
-        if (strike) {
-
-            line.setLine((x + space) * s, (y - height / 2.f) * s, xx - s * space / 2, (y - height / 2.f) * s);
-            g2.draw(line);
-        }
-
-        g2.setTransform(transf);
-        g2.setStroke(oldStroke);
+    for (int i = 0; i < N; i++)
+    {
+      line.setLine(xx + th * s, (y - height) * s, xx + th * s, y * s);
+      g2.draw(line);
+      xx += inc;
     }
 
-    public int getLastFontId() {
-        return TeXFont.NO_FONT;
+    if (strike)
+    {
+
+      line.setLine((x + space) * s, (y - height / 2.f) * s, xx - s * space / 2, (y - height / 2.f) * s);
+      g2.draw(line);
     }
+
+    g2.setTransform(transf);
+    g2.setStroke(oldStroke);
+  }
+
+  public int getLastFontId()
+  {
+    return TeXFont.NO_FONT;
+  }
 }

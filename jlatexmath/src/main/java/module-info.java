@@ -3,7 +3,7 @@ module jlatexmath
   requires java.base;
   requires transitive java.desktop;
   requires transitive java.xml;
-  
+
   exports org.scilab.forge.jlatexmath;
   exports org.scilab.forge.jlatexmath.cache;
   exports org.scilab.forge.jlatexmath.cyrillic;

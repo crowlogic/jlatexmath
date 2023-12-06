@@ -48,11 +48,19 @@ package org.scilab.forge.jlatexmath;
 /**
  * An empty atom just to add a mark.
  */
-public class BreakMarkAtom extends Atom {
+public class BreakMarkAtom extends
+                           Atom
+{
 
-    public BreakMarkAtom() { }
+  public BreakMarkAtom()
+  {
+  }
 
-    public Box createBox(TeXEnvironment env) {
-        return new StrutBox(0, 0, 0, 0);
-    }
+  public Box createBox(TeXEnvironment env)
+  {
+    return new StrutBox(0,
+                        0,
+                        0,
+                        0);
+  }
 }

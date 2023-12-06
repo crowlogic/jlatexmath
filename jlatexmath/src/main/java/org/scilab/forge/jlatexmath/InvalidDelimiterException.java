@@ -47,26 +47,27 @@
 package org.scilab.forge.jlatexmath;
 
 /**
- * Signals that a symbol, that was not defined as a delimiter, was used
- * as a delimiter.
+ * Signals that a symbol, that was not defined as a delimiter, was used as a
+ * delimiter.
  *
  * @author Kurt Vermeulen
  */
-public class InvalidDelimiterException extends JMathTeXException {
+public class InvalidDelimiterException extends
+                                       JMathTeXException
+{
 
-    private static final long serialVersionUID = 212553180078002724L;
+  private static final long serialVersionUID = 212553180078002724L;
 
-    protected InvalidDelimiterException(String symbolName) {
-        super("The symbol with the name '" + symbolName
-              + "' is not defined as a delimiter ("
-              + TeXSymbolParser.DELIMITER_ATTR + "='true') in '"
-              + TeXSymbolParser.RESOURCE_NAME + "'!");
-    }
+  protected InvalidDelimiterException(String symbolName)
+  {
+    super("The symbol with the name '" + symbolName + "' is not defined as a delimiter ("
+                  + TeXSymbolParser.DELIMITER_ATTR + "='true') in '" + TeXSymbolParser.RESOURCE_NAME + "'!");
+  }
 
-    protected InvalidDelimiterException(char ch, String symbolName) {
-        super("The character '" + ch + "' is mapped to a symbol with the name '"
-              + symbolName + "', but that symbol is not defined as a delimiter ("
-              + TeXSymbolParser.DELIMITER_ATTR + "='true') in '"
-              + TeXSymbolParser.RESOURCE_NAME + "'!");
-    }
+  protected InvalidDelimiterException(char ch, String symbolName)
+  {
+    super("The character '" + ch + "' is mapped to a symbol with the name '" + symbolName
+                  + "', but that symbol is not defined as a delimiter (" + TeXSymbolParser.DELIMITER_ATTR
+                  + "='true') in '" + TeXSymbolParser.RESOURCE_NAME + "'!");
+  }
 }

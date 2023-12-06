@@ -48,19 +48,26 @@ package org.scilab.forge.jlatexmath;
 /**
  * An atom representing a mono scale Atom.
  */
-public class MonoScaleAtom extends ScaleAtom {
+public class MonoScaleAtom extends
+                           ScaleAtom
+{
 
-    private float factor;
+  private float factor;
 
-    public MonoScaleAtom(Atom base, float factor) {
-        super(base, (double) factor, (double) factor);
-        this.factor = factor;
-    }
+  public MonoScaleAtom(Atom base, float factor)
+  {
+    super(base,
+          (double) factor,
+          (double) factor);
+    this.factor = factor;
+  }
 
-    public Box createBox(TeXEnvironment env) {
-        env = env.copy();
-        float f = env.getScaleFactor();
-        env.setScaleFactor(factor);
-        return new ScaleBox(base.createBox(env), factor / f);
-    }
+  public Box createBox(TeXEnvironment env)
+  {
+    env = env.copy();
+    float f = env.getScaleFactor();
+    env.setScaleFactor(factor);
+    return new ScaleBox(base.createBox(env),
+                        factor / f);
+  }
 }

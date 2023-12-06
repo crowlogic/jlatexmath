@@ -47,83 +47,105 @@
 package org.scilab.forge.jlatexmath;
 
 /**
- * An atom representing exactly one alphanumeric character and the text style in which
- * it should be drawn.
+ * An atom representing exactly one alphanumeric character and the text style in
+ * which it should be drawn.
  */
-public class CharAtom extends CharSymbol {
+public class CharAtom extends
+                      CharSymbol
+{
 
-    // alphanumeric character
-    private final char c;
+  // alphanumeric character
+  private final char c;
 
-    // text style (null means the default text style)
-    private String textStyle;
-    private boolean mathMode;
+  // text style (null means the default text style)
+  private String     textStyle;
+  private boolean    mathMode;
 
-    /**
-     * Creates a CharAtom that will represent the given character in the given text style.
-     * Null for the text style means the default text style.
-     *
-     * @param c the alphanumeric character
-     * @param textStyle the text style in which the character should be drawn
-     */
-    public CharAtom(char c, String textStyle, boolean mathMode) {
-        this.c = c;
-        this.textStyle = textStyle;
-        this.mathMode = mathMode;
+  /**
+   * Creates a CharAtom that will represent the given character in the given text
+   * style. Null for the text style means the default text style.
+   *
+   * @param c         the alphanumeric character
+   * @param textStyle the text style in which the character should be drawn
+   */
+  public CharAtom(char c, String textStyle, boolean mathMode)
+  {
+    this.c         = c;
+    this.textStyle = textStyle;
+    this.mathMode  = mathMode;
+  }
+
+  public CharAtom(char c, String textStyle)
+  {
+    this(c,
+         textStyle,
+         false);
+  }
+
+  public boolean isMathMode()
+  {
+    return mathMode;
+  }
+
+  public Box createBox(TeXEnvironment env)
+  {
+    if (textStyle == null)
+    {
+      String ts = env.getTextStyle();
+      if (ts != null)
+      {
+        textStyle = ts;
+      }
+    }
+    boolean smallCap = env.getSmallCap();
+    Char    ch       = getChar(env.getTeXFont(), env.getStyle(), smallCap);
+    Box     box      = new CharBox(ch);
+    if (smallCap && Character.isLowerCase(c))
+    {
+      // We have a small capital
+      box = new ScaleBox(box,
+                         0.8f,
+                         0.8f);
     }
 
-    public CharAtom(char c, String textStyle) {
-        this(c, textStyle, false);
-    }
+    return box;
+  }
 
-    public boolean isMathMode() {
-        return mathMode;
-    }
+  public char getCharacter()
+  {
+    return c;
+  }
 
-    public Box createBox(TeXEnvironment env) {
-        if (textStyle == null) {
-            String ts = env.getTextStyle();
-            if (ts != null) {
-                textStyle = ts;
-            }
-        }
-        boolean smallCap = env.getSmallCap();
-        Char ch = getChar(env.getTeXFont(), env.getStyle(), smallCap);
-        Box box = new CharBox(ch);
-        if (smallCap && Character.isLowerCase(c)) {
-            // We have a small capital
-            box = new ScaleBox(box, 0.8f, 0.8f);
-        }
-
-        return box;
+  /*
+   * Get the Char-object representing this character ("c") in the right text style
+   */
+  private Char getChar(TeXFont tf, int style, boolean smallCap)
+  {
+    char chr = c;
+    if (smallCap)
+    {
+      if (Character.isLowerCase(c))
+      {
+        chr = Character.toUpperCase(c);
+      }
     }
-
-    public char getCharacter() {
-        return c;
+    if (textStyle == null)
+    {
+      return tf.getDefaultChar(chr, style);
     }
-
-    /*
-     * Get the Char-object representing this character ("c") in the right text style
-     */
-    private Char getChar(TeXFont tf, int style, boolean smallCap) {
-        char chr = c;
-        if (smallCap) {
-            if (Character.isLowerCase(c)) {
-                chr = Character.toUpperCase(c);
-            }
-        }
-        if (textStyle == null) {
-            return tf.getDefaultChar(chr, style);
-        } else {
-            return tf.getChar(chr, textStyle, style);
-        }
+    else
+    {
+      return tf.getChar(chr, textStyle, style);
     }
+  }
 
-    public CharFont getCharFont(TeXFont tf) {
-        return getChar(tf, TeXConstants.STYLE_DISPLAY, false).getCharFont();
-    }
+  public CharFont getCharFont(TeXFont tf)
+  {
+    return getChar(tf, TeXConstants.STYLE_DISPLAY, false).getCharFont();
+  }
 
-    public String toString() {
-        return "CharAtom: \'" + c + "\'";
-    }
+  public String toString()
+  {
+    return "CharAtom: \'" + c + "\'";
+  }
 }

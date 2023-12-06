@@ -46,46 +46,57 @@
 
 package org.scilab.forge.jlatexmath;
 
-public class XMLResourceParseException extends ResourceParseException {
+public class XMLResourceParseException extends
+                                       ResourceParseException
+{
 
-    private static final long serialVersionUID = 2091302779298293946L;
+  private static final long serialVersionUID = 2091302779298293946L;
 
-    /*
-     * Attribute problem
-     */
-    public XMLResourceParseException(String resourceName, String elementName, String attributeName, String msg) {
-        super(resourceName + ": invalid <" + elementName
-              + ">-element found: attribute '" + attributeName + "' "
-              + (msg == null ? "is required!" : msg));
-    }
+  /*
+   * Attribute problem
+   */
+  public XMLResourceParseException(String resourceName, String elementName, String attributeName, String msg)
+  {
+    super(resourceName + ": invalid <" + elementName + ">-element found: attribute '" + attributeName + "' "
+                  + (msg == null ? "is required!" : msg));
+  }
 
-    /*
-     * Attribute problem
-     */
-    public XMLResourceParseException(String resourceName, String elementName, String attributeName, String msg, Throwable e) {
-        super(resourceName + ": invalid <" + elementName
-              + ">-element found: attribute '" + attributeName + "' "
-              + (msg == null ? "is required!" : msg), e);
-    }
-    /*
-     * required element missing
-     */
-    public XMLResourceParseException(String resourceName, String elementName) {
-        super(resourceName + ": the required <" + elementName
-              + ">-element is not found!");
-    }
+  /*
+   * Attribute problem
+   */
+  public XMLResourceParseException(String resourceName,
+                                   String elementName,
+                                   String attributeName,
+                                   String msg,
+                                   Throwable e)
+  {
+    super(resourceName + ": invalid <" + elementName + ">-element found: attribute '" + attributeName + "' "
+                  + (msg == null ? "is required!" : msg),
+          e);
+  }
 
-    /*
-     * JDOMException or IOException
-     */
-    public XMLResourceParseException(String resourceName, Throwable e) {
-        super(resourceName, e);
-    }
+  /*
+   * required element missing
+   */
+  public XMLResourceParseException(String resourceName, String elementName)
+  {
+    super(resourceName + ": the required <" + elementName + ">-element is not found!");
+  }
 
-    /*
-     * for other cases
-     */
-    public XMLResourceParseException(String msg) {
-        super(msg);
-    }
+  /*
+   * JDOMException or IOException
+   */
+  public XMLResourceParseException(String resourceName, Throwable e)
+  {
+    super(resourceName,
+          e);
+  }
+
+  /*
+   * for other cases
+   */
+  public XMLResourceParseException(String msg)
+  {
+    super(msg);
+  }
 }

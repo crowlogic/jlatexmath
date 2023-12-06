@@ -48,11 +48,19 @@ package org.scilab.forge.jlatexmath;
 /**
  * An empty atom.
  */
-public class EmptyAtom extends Atom {
+public class EmptyAtom extends
+                       Atom
+{
 
-    public EmptyAtom() { }
+  public EmptyAtom()
+  {
+  }
 
-    public Box createBox(TeXEnvironment env) {
-        return new StrutBox(0, 0, 0, 0);
-    }
+  public Box createBox(TeXEnvironment env)
+  {
+    return new StrutBox(0,
+                        0,
+                        0,
+                        0);
+  }
 }

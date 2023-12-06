@@ -49,43 +49,54 @@ package org.scilab.forge.jlatexmath;
 /**
  * An atom representing another atom that should be drawn invisibly.
  */
-public class PhantomAtom extends Atom implements Row {
+public class PhantomAtom extends
+                         Atom implements
+                         Row
+{
 
-    // RowAtom to be drawn invisibly
-    private RowAtom elements;
+  // RowAtom to be drawn invisibly
+  private RowAtom elements;
 
-    // dimensions to be taken into account
-    private boolean w = true, h = true, d = true;
+  // dimensions to be taken into account
+  private boolean w = true, h = true, d = true;
 
-    public PhantomAtom(Atom el) {
-        if (el == null)
-            elements = new RowAtom();
-        else
-            elements = new RowAtom(el);
-    }
+  public PhantomAtom(Atom el)
+  {
+    if (el == null)
+      elements = new RowAtom();
+    else
+      elements = new RowAtom(el);
+  }
 
-    public PhantomAtom(Atom el, boolean width, boolean height, boolean depth) {
-        this(el);
-        w = width;
-        h = height;
-        d = depth;
-    }
+  public PhantomAtom(Atom el, boolean width, boolean height, boolean depth)
+  {
+    this(el);
+    w = width;
+    h = height;
+    d = depth;
+  }
 
-    public Box createBox(TeXEnvironment env) {
-        Box res = elements.createBox(env);
-        return new StrutBox((w ? res.getWidth() : 0), (h ? res.getHeight() : 0),
-                            (d ? res.getDepth() : 0), res.getShift());
-    }
+  public Box createBox(TeXEnvironment env)
+  {
+    Box res = elements.createBox(env);
+    return new StrutBox((w ? res.getWidth() : 0),
+                        (h ? res.getHeight() : 0),
+                        (d ? res.getDepth() : 0),
+                        res.getShift());
+  }
 
-    public int getLeftType() {
-        return elements.getLeftType();
-    }
+  public int getLeftType()
+  {
+    return elements.getLeftType();
+  }
 
-    public int getRightType() {
-        return elements.getRightType();
-    }
+  public int getRightType()
+  {
+    return elements.getRightType();
+  }
 
-    public void setPreviousAtom(Dummy prev) {
-        elements.setPreviousAtom(prev);
-    }
+  public void setPreviousAtom(Dummy prev)
+  {
+    elements.setPreviousAtom(prev);
+  }
 }

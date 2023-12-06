@@ -51,13 +51,16 @@ package org.scilab.forge.jlatexmath;
  *
  * @author Kurt Vermeulen
  */
-public class TextStyleMappingNotFoundException extends JMathTeXException {
+public class TextStyleMappingNotFoundException extends
+                                               JMathTeXException
+{
 
-    private static final long serialVersionUID = 4887043712790844966L;
+  private static final long serialVersionUID = 4887043712790844966L;
 
-    protected TextStyleMappingNotFoundException(String styleName) {
-        super("No mapping found for the text style '" + styleName + "'! "
-              + "Insert a <" + DefaultTeXFontParser.STYLE_MAPPING_EL
-              + ">-element in '" + DefaultTeXFontParser.RESOURCE_NAME + "'.");
-    }
+  protected TextStyleMappingNotFoundException(String styleName)
+  {
+    super("No mapping found for the text style '" + styleName + "'! " + "Insert a <"
+                  + DefaultTeXFontParser.STYLE_MAPPING_EL + ">-element in '" + DefaultTeXFontParser.RESOURCE_NAME
+                  + "'.");
+  }
 }

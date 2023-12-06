@@ -48,29 +48,34 @@ package org.scilab.forge.jlatexmath;
 /**
  * An atom representing a smashed atom (i.e. with no height and no depth).
  */
-public class SmashedAtom extends Atom {
+public class SmashedAtom extends
+                         Atom
+{
 
-    private Atom at;
-    private boolean h = true, d = true;
+  private Atom    at;
+  private boolean h = true, d = true;
 
-    public SmashedAtom(Atom at, String opt) {
-        this.at = at;
-        if ("t".equals(opt))
-            d = false;
-        else if ("b".equals(opt))
-            h = false;
-    }
+  public SmashedAtom(Atom at, String opt)
+  {
+    this.at = at;
+    if ("t".equals(opt))
+      d = false;
+    else if ("b".equals(opt))
+      h = false;
+  }
 
-    public SmashedAtom(Atom at) {
-        this.at = at;
-    }
+  public SmashedAtom(Atom at)
+  {
+    this.at = at;
+  }
 
-    public Box createBox(TeXEnvironment env) {
-        Box b = at.createBox(env);
-        if (h)
-            b.setHeight(0);
-        if (d)
-            b.setDepth(0);
-        return b;
-    }
+  public Box createBox(TeXEnvironment env)
+  {
+    Box b = at.createBox(env);
+    if (h)
+      b.setHeight(0);
+    if (d)
+      b.setDepth(0);
+    return b;
+  }
 }

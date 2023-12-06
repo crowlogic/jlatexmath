@@ -48,23 +48,33 @@ package org.scilab.forge.jlatexmath;
 /**
  * An atom with representing an L with a caron.
  */
-public class LCaronAtom extends Atom {
+public class LCaronAtom extends
+                        Atom
+{
 
-    private boolean upper;
+  private boolean upper;
 
-    public LCaronAtom(boolean upper) {
-        this.upper = upper;
-    }
+  public LCaronAtom(boolean upper)
+  {
+    this.upper = upper;
+  }
 
-    public Box createBox(TeXEnvironment env) {
-        CharBox A = new CharBox(env.getTeXFont().getChar("textapos", env.getStyle()));
-        CharBox L = new CharBox(env.getTeXFont().getChar(upper ? 'L' : 'l', "mathnormal", env.getStyle()));
-        HorizontalBox hb = new HorizontalBox(L);
-        if (upper)
-            hb.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.3f, 0, 0).createBox(env));
-        else
-            hb.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.13f, 0, 0).createBox(env));
-        hb.add(A);
-        return hb;
-    }
+  public Box createBox(TeXEnvironment env)
+  {
+    CharBox       A  = new CharBox(env.getTeXFont().getChar("textapos", env.getStyle()));
+    CharBox       L  = new CharBox(env.getTeXFont().getChar(upper ? 'L' : 'l', "mathnormal", env.getStyle()));
+    HorizontalBox hb = new HorizontalBox(L);
+    if (upper)
+      hb.add(new SpaceAtom(TeXConstants.UNIT_EM,
+                           -0.3f,
+                           0,
+                           0).createBox(env));
+    else
+      hb.add(new SpaceAtom(TeXConstants.UNIT_EM,
+                           -0.13f,
+                           0,
+                           0).createBox(env));
+    hb.add(A);
+    return hb;
+  }
 }

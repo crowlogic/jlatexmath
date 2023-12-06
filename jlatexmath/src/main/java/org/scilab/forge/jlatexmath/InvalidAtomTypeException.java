@@ -51,11 +51,14 @@ package org.scilab.forge.jlatexmath;
  *
  * @author Kurt Vermeulen
  */
-public class InvalidAtomTypeException extends JMathTeXException {
+public class InvalidAtomTypeException extends
+                                      JMathTeXException
+{
 
-    private static final long serialVersionUID = -6558639348158242539L;
+  private static final long serialVersionUID = -6558639348158242539L;
 
-    protected InvalidAtomTypeException(String msg) {
-        super(msg);
-    }
+  protected InvalidAtomTypeException(String msg)
+  {
+    super(msg);
+  }
 }

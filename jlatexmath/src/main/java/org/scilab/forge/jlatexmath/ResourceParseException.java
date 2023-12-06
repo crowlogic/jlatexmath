@@ -47,17 +47,23 @@
 package org.scilab.forge.jlatexmath;
 
 /**
- * Signals that an error occurred while loading the necessary resources into memory.
+ * Signals that an error occurred while loading the necessary resources into
+ * memory.
  */
-public class ResourceParseException extends JMathTeXException {
+public class ResourceParseException extends
+                                    JMathTeXException
+{
 
-    private static final long serialVersionUID = -7083164592631533649L;
+  private static final long serialVersionUID = -7083164592631533649L;
 
-    protected ResourceParseException(String msg) {
-        super(msg);
-    }
+  protected ResourceParseException(String msg)
+  {
+    super(msg);
+  }
 
-    protected ResourceParseException(String msg, Throwable cause) {
-        super(msg, cause);
-    }
+  protected ResourceParseException(String msg, Throwable cause)
+  {
+    super(msg,
+          cause);
+  }
 }

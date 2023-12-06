@@ -48,35 +48,47 @@ package org.scilab.forge.jlatexmath;
 import org.scilab.forge.jlatexmath.cyrillic.CyrillicRegistration;
 import org.scilab.forge.jlatexmath.greek.GreekRegistration;
 
-public class WebStartAlphabetRegistration implements AlphabetRegistration {
+public class WebStartAlphabetRegistration implements
+                                          AlphabetRegistration
+{
 
-    private Character.UnicodeBlock[] blocks;
-    private AlphabetRegistration reg;
+  private Character.UnicodeBlock[] blocks;
+  private AlphabetRegistration     reg;
 
-    private WebStartAlphabetRegistration(Character.UnicodeBlock[] blocks) {
-        this.blocks = blocks;
+  private WebStartAlphabetRegistration(Character.UnicodeBlock[] blocks)
+  {
+    this.blocks = blocks;
+  }
+
+  public static void register(Character.UnicodeBlock[] blocks)
+  {
+    DefaultTeXFont.registerAlphabet(new WebStartAlphabetRegistration(blocks));
+  }
+
+  public Character.UnicodeBlock[] getUnicodeBlock()
+  {
+    return blocks;
+  }
+
+  public Object getPackage() throws AlphabetRegistrationException
+  {
+    if (blocks == JLM_GREEK)
+    {
+      reg = new GreekRegistration();
     }
-
-    public static void register(Character.UnicodeBlock[] blocks) {
-        DefaultTeXFont.registerAlphabet(new WebStartAlphabetRegistration(blocks));
+    else if (blocks == JLM_CYRILLIC)
+    {
+      reg = new CyrillicRegistration();
     }
-
-    public Character.UnicodeBlock[] getUnicodeBlock() {
-        return blocks;
+    else
+    {
+      throw new AlphabetRegistrationException("Invalid Unicode Block");
     }
+    return reg;
+  }
 
-    public Object getPackage() throws AlphabetRegistrationException {
-        if (blocks == JLM_GREEK) {
-            reg = new GreekRegistration();
-        } else if (blocks == JLM_CYRILLIC) {
-            reg = new CyrillicRegistration();
-        } else {
-            throw new AlphabetRegistrationException("Invalid Unicode Block");
-        }
-        return reg;
-    }
-
-    public String getTeXFontFileName() {
-        return reg.getTeXFontFileName();
-    }
+  public String getTeXFontFileName()
+  {
+    return reg.getTeXFontFileName();
+  }
 }

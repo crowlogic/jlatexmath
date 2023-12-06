@@ -67,36 +67,47 @@ import org.scilab.forge.jlatexmath.TeXIcon;
 /**
  * A class to test LaTeX rendering.
  **/
-public class FooPackageTest {
+public class FooPackageTest
+{
 
-    @Test
-    public void testUseCustomPackage() throws ResourceParseException, FileNotFoundException {
-        InputStream is = FooPackageTest.class.getResourceAsStream("/Package_Foo.xml");
-        assertNotNull(is);
-        TeXFormula.addPredefinedCommands(is);
-        String latex = "\\begin{array}{l}";
-        latex += "\\fooA{\\pi}{C}\\\\";
-        latex += "\\mbox{A red circle }\\fooB{75.3}\\\\";
-        latex += "\\mbox{A red disk }\\fooC[abc]{126.7}\\\\";
-        latex += "\\mbox{An other red circle }\\fooD{159.81}[ab]";
-        latex += "\\end{array}";
+  @Test
+  public void testUseCustomPackage() throws ResourceParseException, FileNotFoundException
+  {
+    InputStream is = FooPackageTest.class.getResourceAsStream("/Package_Foo.xml");
+    assertNotNull(is);
+    TeXFormula.addPredefinedCommands(is);
+    String latex = "\\begin{array}{l}";
+    latex += "\\fooA{\\pi}{C}\\\\";
+    latex += "\\mbox{A red circle }\\fooB{75.3}\\\\";
+    latex += "\\mbox{A red disk }\\fooC[abc]{126.7}\\\\";
+    latex += "\\mbox{An other red circle }\\fooD{159.81}[ab]";
+    latex += "\\end{array}";
 
-        TeXFormula formula = new TeXFormula(latex);
-        TeXIcon icon = formula.createTeXIcon(TeXConstants.STYLE_DISPLAY, 20);
-        icon.setInsets(new Insets(5, 5, 5, 5));
+    TeXFormula formula = new TeXFormula(latex);
+    TeXIcon    icon    = formula.createTeXIcon(TeXConstants.STYLE_DISPLAY, 20);
+    icon.setInsets(new Insets(5,
+                              5,
+                              5,
+                              5));
 
-        BufferedImage image = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(),
-                                                BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = image.createGraphics();
-        g2.setColor(Color.white);
-        g2.fillRect(0, 0, icon.getIconWidth(), icon.getIconHeight());
-        JLabel jl = new JLabel();
-        jl.setForeground(new Color(0, 0, 0));
-        icon.paintIcon(jl, g2, 0, 0);
-        File file = new File("target/ExampleMacros.png");
-        try {
-            ImageIO.write(image, "png", file.getAbsoluteFile());
-        } catch (IOException ex) {
-        }
+    BufferedImage image = new BufferedImage(icon.getIconWidth(),
+                                            icon.getIconHeight(),
+                                            BufferedImage.TYPE_INT_ARGB);
+    Graphics2D    g2    = image.createGraphics();
+    g2.setColor(Color.white);
+    g2.fillRect(0, 0, icon.getIconWidth(), icon.getIconHeight());
+    JLabel jl = new JLabel();
+    jl.setForeground(new Color(0,
+                               0,
+                               0));
+    icon.paintIcon(jl, g2, 0, 0);
+    File file = new File("target/ExampleMacros.png");
+    try
+    {
+      ImageIO.write(image, "png", file.getAbsoluteFile());
     }
+    catch (IOException ex)
+    {
+    }
+  }
 }

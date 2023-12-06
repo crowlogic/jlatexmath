@@ -45,61 +45,71 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 
 /**
  * A box representing a box containing a graphics.
  */
-public class GeoGebraLogoBox extends Box {
+public class GeoGebraLogoBox extends
+                             Box
+{
 
-    private static final Color gray = new Color(102, 102, 102);
-    private static final Color blue = new Color(153, 153, 255);
+  private static final Color       gray = new Color(102,
+                                                    102,
+                                                    102);
+  private static final Color       blue = new Color(153,
+                                                    153,
+                                                    255);
 
-    private static final BasicStroke st = new BasicStroke(3.79999995f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 4f);
+  private static final BasicStroke st   = new BasicStroke(3.79999995f,
+                                                          BasicStroke.CAP_BUTT,
+                                                          BasicStroke.JOIN_MITER,
+                                                          4f);
 
-    public GeoGebraLogoBox(float w, float h) {
-        this.depth = 0;
-        this.height = h;
-        this.width = w;
-        this.shift = 0;
-    }
+  public GeoGebraLogoBox(float w, float h)
+  {
+    this.depth  = 0;
+    this.height = h;
+    this.width  = w;
+    this.shift  = 0;
+  }
 
-    public void draw(Graphics2D g2, float x, float y) {
-        AffineTransform oldAt = g2.getTransform();
-        Color oldC = g2.getColor();
-        Stroke oldS = g2.getStroke();
-        g2.translate(x + 0.25f * height / 2.15f, y - 1.75f / 2.15f * height);
-        g2.setColor(gray);
-        g2.setStroke(st);
-        g2.scale(0.05f * height / 2.15f, 0.05f * height / 2.15f);
-        g2.rotate(-26 * Math.PI / 180, 20.5, 17.5);
-        g2.drawArc(0, 0, 43, 32, 0, 360);
-        g2.rotate(26 * Math.PI / 180, 20.5, 17.5);
-        g2.setStroke(oldS);
-        drawCircle(g2, 16f, -5f);
-        drawCircle(g2, -1f, 7f);
-        drawCircle(g2, 5f, 28f);
-        drawCircle(g2, 27f, 24f);
-        drawCircle(g2, 36f, 3f);
-        g2.setStroke(oldS);
-        g2.setTransform(oldAt);
-        g2.setColor(oldC);
-    }
+  public void draw(Graphics2D g2, float x, float y)
+  {
+    AffineTransform oldAt = g2.getTransform();
+    Color           oldC  = g2.getColor();
+    Stroke          oldS  = g2.getStroke();
+    g2.translate(x + 0.25f * height / 2.15f, y - 1.75f / 2.15f * height);
+    g2.setColor(gray);
+    g2.setStroke(st);
+    g2.scale(0.05f * height / 2.15f, 0.05f * height / 2.15f);
+    g2.rotate(-26 * Math.PI / 180, 20.5, 17.5);
+    g2.drawArc(0, 0, 43, 32, 0, 360);
+    g2.rotate(26 * Math.PI / 180, 20.5, 17.5);
+    g2.setStroke(oldS);
+    drawCircle(g2, 16f, -5f);
+    drawCircle(g2, -1f, 7f);
+    drawCircle(g2, 5f, 28f);
+    drawCircle(g2, 27f, 24f);
+    drawCircle(g2, 36f, 3f);
+    g2.setStroke(oldS);
+    g2.setTransform(oldAt);
+    g2.setColor(oldC);
+  }
 
-    private static void drawCircle(Graphics2D g2, float x, float y) {
-        g2.setColor(blue);
-        g2.translate(x, y);
-        g2.fillArc(0, 0, 8, 8, 0, 360);
-        g2.setColor(Color.BLACK);
-        g2.drawArc(0, 0, 8, 8, 0, 360);
-        g2.translate(-x, -y);
-    }
+  private static void drawCircle(Graphics2D g2, float x, float y)
+  {
+    g2.setColor(blue);
+    g2.translate(x, y);
+    g2.fillArc(0, 0, 8, 8, 0, 360);
+    g2.setColor(Color.BLACK);
+    g2.drawArc(0, 0, 8, 8, 0, 360);
+    g2.translate(-x, -y);
+  }
 
-    public int getLastFontId() {
-        return 0;
-    }
+  public int getLastFontId()
+  {
+    return 0;
+  }
 }

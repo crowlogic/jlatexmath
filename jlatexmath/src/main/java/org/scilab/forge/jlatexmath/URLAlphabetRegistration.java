@@ -48,46 +48,61 @@ package org.scilab.forge.jlatexmath;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-public class URLAlphabetRegistration implements AlphabetRegistration {
+public class URLAlphabetRegistration implements
+                                     AlphabetRegistration
+{
 
-    private URL url;
-    private String language;
-    private AlphabetRegistration pack = null;
-    private Character.UnicodeBlock[] blocks;
+  private URL                      url;
+  private String                   language;
+  private AlphabetRegistration     pack = null;
+  private Character.UnicodeBlock[] blocks;
 
-    private URLAlphabetRegistration(URL url, String language, Character.UnicodeBlock[] blocks) {
-        this.url = url;
-        this.language = language;
-        this.blocks = blocks;
+  private URLAlphabetRegistration(URL url, String language, Character.UnicodeBlock[] blocks)
+  {
+    this.url      = url;
+    this.language = language;
+    this.blocks   = blocks;
+  }
+
+  public static void register(URL url, String language, Character.UnicodeBlock[] blocks)
+  {
+    DefaultTeXFont.registerAlphabet(new URLAlphabetRegistration(url,
+                                                                language,
+                                                                blocks));
+  }
+
+  public Character.UnicodeBlock[] getUnicodeBlock()
+  {
+    return blocks;
+  }
+
+  public Object getPackage() throws AlphabetRegistrationException
+  {
+    URL urls[] =
+    { url };
+    language = language.toLowerCase();
+    String name = "org.scilab.forge.jlatexmath." + language + "."
+                  + Character.toString(Character.toUpperCase(language.charAt(0)))
+                  + language.substring(1, language.length()) + "Registration";
+
+    try
+    {
+      ClassLoader loader = new URLClassLoader(urls);
+      pack = (AlphabetRegistration) Class.forName(name, true, loader).newInstance();
     }
-
-    public static void register(URL url, String language, Character.UnicodeBlock[] blocks) {
-        DefaultTeXFont.registerAlphabet(new URLAlphabetRegistration(url, language, blocks));
+    catch (ClassNotFoundException e)
+    {
+      throw new AlphabetRegistrationException("Class at " + url + " cannot be got.");
     }
-
-    public Character.UnicodeBlock[] getUnicodeBlock() {
-        return blocks;
+    catch (Exception e)
+    {
+      throw new AlphabetRegistrationException("Problem in loading the class at " + url + " :\n" + e.getMessage());
     }
+    return pack;
+  }
 
-    public Object getPackage() throws AlphabetRegistrationException {
-        URL urls[] = {url};
-        language = language.toLowerCase();
-        String name = "org.scilab.forge.jlatexmath." + language
-                      + "." + Character.toString(Character.toUpperCase(language.charAt(0)))
-                      + language.substring(1, language.length()) + "Registration";
-
-        try {
-            ClassLoader loader = new URLClassLoader(urls);
-            pack = (AlphabetRegistration) Class.forName(name, true, loader).newInstance();
-        } catch (ClassNotFoundException e) {
-            throw new AlphabetRegistrationException("Class at " + url + " cannot be got.");
-        } catch (Exception e) {
-            throw new AlphabetRegistrationException("Problem in loading the class at " + url + " :\n" + e.getMessage());
-        }
-        return pack;
-    }
-
-    public String getTeXFontFileName() {
-        return pack.getTeXFontFileName();
-    }
+  public String getTeXFontFileName()
+  {
+    return pack.getTeXFontFileName();
+  }
 }

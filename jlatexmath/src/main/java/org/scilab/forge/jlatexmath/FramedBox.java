@@ -45,63 +45,83 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 /**
  * A box representing a rotated box.
  */
-public class FramedBox extends Box {
+public class FramedBox extends
+                       Box
+{
 
-    protected Box box;
-    protected float thickness;
-    protected float space;
-    private Color line;
-    private Color bg;
+  protected Box   box;
+  protected float thickness;
+  protected float space;
+  private Color   line;
+  private Color   bg;
 
-    public FramedBox(Box box, float thickness, float space) {
-        this.box = box;
-        this.width = box.width + 2 * thickness + 2 * space;
-        this.height = box.height + thickness + space;
-        this.depth = box.depth + thickness + space;
-        this.shift = box.shift;
-        this.thickness = thickness;
-        this.space = space;
+  public FramedBox(Box box, float thickness, float space)
+  {
+    this.box       = box;
+    this.width     = box.width + 2 * thickness + 2 * space;
+    this.height    = box.height + thickness + space;
+    this.depth     = box.depth + thickness + space;
+    this.shift     = box.shift;
+    this.thickness = thickness;
+    this.space     = space;
+  }
+
+  public FramedBox(Box box, float thickness, float space, Color line, Color bg)
+  {
+    this(box,
+         thickness,
+         space);
+    this.line = line;
+    this.bg   = bg;
+  }
+
+  public void draw(Graphics2D g2, float x, float y)
+  {
+    Stroke st = g2.getStroke();
+    g2.setStroke(new BasicStroke(thickness,
+                                 BasicStroke.CAP_BUTT,
+                                 BasicStroke.JOIN_MITER));
+    float th = thickness / 2;
+    if (bg != null)
+    {
+      Color prev = g2.getColor();
+      g2.setColor(bg);
+      g2.fill(new Rectangle2D.Float(x + th,
+                                    y - height + th,
+                                    width - thickness,
+                                    height + depth - thickness));
+      g2.setColor(prev);
     }
-
-    public FramedBox(Box box, float thickness, float space, Color line, Color bg) {
-        this(box, thickness, space);
-        this.line = line;
-        this.bg = bg;
+    if (line != null)
+    {
+      Color prev = g2.getColor();
+      g2.setColor(line);
+      g2.draw(new Rectangle2D.Float(x + th,
+                                    y - height + th,
+                                    width - thickness,
+                                    height + depth - thickness));
+      g2.setColor(prev);
     }
-
-    public void draw(Graphics2D g2, float x, float y) {
-        Stroke st = g2.getStroke();
-        g2.setStroke(new BasicStroke(thickness, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));
-        float th = thickness / 2;
-        if (bg != null) {
-            Color prev = g2.getColor();
-            g2.setColor(bg);
-            g2.fill(new Rectangle2D.Float(x + th, y - height + th, width - thickness, height + depth - thickness));
-            g2.setColor(prev);
-        }
-        if (line != null) {
-            Color prev = g2.getColor();
-            g2.setColor(line);
-            g2.draw(new Rectangle2D.Float(x + th, y - height + th, width - thickness, height + depth - thickness));
-            g2.setColor(prev);
-        } else {
-            g2.draw(new Rectangle2D.Float(x + th, y - height + th, width - thickness, height + depth - thickness));
-        }
-        //drawDebug(g2, x, y);
-        g2.setStroke(st);
-        box.draw(g2, x + space + thickness, y);
+    else
+    {
+      g2.draw(new Rectangle2D.Float(x + th,
+                                    y - height + th,
+                                    width - thickness,
+                                    height + depth - thickness));
     }
+    // drawDebug(g2, x, y);
+    g2.setStroke(st);
+    box.draw(g2, x + space + thickness, y);
+  }
 
-    public int getLastFontId() {
-        return box.getLastFontId();
-    }
+  public int getLastFontId()
+  {
+    return box.getLastFontId();
+  }
 }

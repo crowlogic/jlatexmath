@@ -50,45 +50,77 @@ import java.awt.Font;
 /**
  * The string rendering is made in using Java Graphics2D.drawString.
  */
-public class JavaFontRenderingAtom extends Atom {
+public class JavaFontRenderingAtom extends
+                                   Atom
+{
 
-    private String str;
-    private int type;
-    private TeXFormula.FontInfos fontInfos;
+  private String               str;
+  private int                  type;
+  private TeXFormula.FontInfos fontInfos;
 
-    public JavaFontRenderingAtom(String str, int type) {
-        this.str = str;
-        this.type = type;
+  public JavaFontRenderingAtom(String str, int type)
+  {
+    this.str  = str;
+    this.type = type;
+  }
+
+  public JavaFontRenderingAtom(String str, TeXFormula.FontInfos fontInfos)
+  {
+    this(str,
+         0);
+    this.fontInfos = fontInfos;
+  }
+
+  public Box createBox(TeXEnvironment env)
+  {
+    if (fontInfos == null)
+    {
+      return new JavaFontRenderingBox(str,
+                                      type,
+                                      DefaultTeXFont.getSizeFactor(env.getStyle()));
     }
-
-    public JavaFontRenderingAtom(String str, TeXFormula.FontInfos fontInfos) {
-        this(str, 0);
-        this.fontInfos = fontInfos;
-    }
-
-    public Box createBox(TeXEnvironment env) {
-        if (fontInfos == null) {
-            return new JavaFontRenderingBox(str, type, DefaultTeXFont.getSizeFactor(env.getStyle()));
-        } else {
-            DefaultTeXFont dtf = (DefaultTeXFont) env.getTeXFont();
-            int type = dtf.isIt ? Font.ITALIC : Font.PLAIN;
-            type = type | (dtf.isBold ? Font.BOLD : 0);
-            boolean kerning = dtf.isRoman;
-            Font font;
-            if (dtf.isSs) {
-                if (fontInfos.sansserif == null) {
-                    font = new Font(fontInfos.serif, Font.PLAIN, 10);
-                } else {
-                    font = new Font(fontInfos.sansserif, Font.PLAIN, 10);
-                }
-            } else {
-                if (fontInfos.serif == null) {
-                    font = new Font(fontInfos.sansserif, Font.PLAIN, 10);
-                } else {
-                    font = new Font(fontInfos.serif, Font.PLAIN, 10);
-                }
-            }
-            return new JavaFontRenderingBox(str, type, DefaultTeXFont.getSizeFactor(env.getStyle()), font, kerning);
+    else
+    {
+      DefaultTeXFont dtf  = (DefaultTeXFont) env.getTeXFont();
+      int            type = dtf.isIt ? Font.ITALIC : Font.PLAIN;
+      type = type | (dtf.isBold ? Font.BOLD : 0);
+      boolean kerning = dtf.isRoman;
+      Font    font;
+      if (dtf.isSs)
+      {
+        if (fontInfos.sansserif == null)
+        {
+          font = new Font(fontInfos.serif,
+                          Font.PLAIN,
+                          10);
         }
+        else
+        {
+          font = new Font(fontInfos.sansserif,
+                          Font.PLAIN,
+                          10);
+        }
+      }
+      else
+      {
+        if (fontInfos.serif == null)
+        {
+          font = new Font(fontInfos.sansserif,
+                          Font.PLAIN,
+                          10);
+        }
+        else
+        {
+          font = new Font(fontInfos.serif,
+                          Font.PLAIN,
+                          10);
+        }
+      }
+      return new JavaFontRenderingBox(str,
+                                      type,
+                                      DefaultTeXFont.getSizeFactor(env.getStyle()),
+                                      font,
+                                      kerning);
     }
+  }
 }

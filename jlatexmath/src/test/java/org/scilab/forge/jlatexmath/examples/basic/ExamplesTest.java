@@ -55,75 +55,87 @@ import javax.imageio.ImageIO;
 import org.junit.Test;
 import org.scilab.forge.jlatexmath.internal.util.Images;
 
-public class ExamplesTest {
+public class ExamplesTest
+{
 
-    @Test
-    public void testExample1() throws IOException {
-        Example1.main(new String[0]);
-        check("Example1.png");
-    }
+  @Test
+  public void testExample1() throws IOException
+  {
+    Example1.main(new String[0]);
+    check("Example1.png");
+  }
 
-    @Test
-    public void testExample2() throws IOException {
-        Example2.main(new String[0]);
-        check("Example2.png");
-    }
+  @Test
+  public void testExample2() throws IOException
+  {
+    Example2.main(new String[0]);
+    check("Example2.png");
+  }
 
-    @Test
-    public void testExample3() throws IOException {
-        Example3.main(new String[0]);
-        check("Example3.png");
-    }
+  @Test
+  public void testExample3() throws IOException
+  {
+    Example3.main(new String[0]);
+    check("Example3.png");
+  }
 
-    @Test
-    public void testExample4() throws IOException {
-        Example4.main(new String[0]);
-        check("Example4.png");
-    }
+  @Test
+  public void testExample4() throws IOException
+  {
+    Example4.main(new String[0]);
+    check("Example4.png");
+  }
 
-    @Test
-    public void testExample5() {
-        Example5.main(new String[0]);
-        check("Example5.png");
-    }
+  @Test
+  public void testExample5()
+  {
+    Example5.main(new String[0]);
+    check("Example5.png");
+  }
 
-    @Test
-    public void testExample6() throws IOException {
-        Example6.main(new String[0]);
-        check("Example6.png");
-    }
+  @Test
+  public void testExample6() throws IOException
+  {
+    Example6.main(new String[0]);
+    check("Example6.png");
+  }
 
-    @Test
-    public void testExample8() throws IOException {
-        Example8.main(new String[0]);
-        check("Example8.png");
-    }
+  @Test
+  public void testExample8() throws IOException
+  {
+    Example8.main(new String[0]);
+    check("Example8.png");
+  }
 
-    @Test
-    public void testExample9() throws IOException {
-        Example9.main(new String[0]);
-        check("Example9.png");
-    }
+  @Test
+  public void testExample9() throws IOException
+  {
+    Example9.main(new String[0]);
+    check("Example9.png");
+  }
 
-    private static void check(String filename) {
-        try {
-            System.out.println("checking image " + filename);
-            BufferedImage a = ImageIO.read(new File("src/test/resources/expected/" + filename));
-            BufferedImage b = ImageIO.read(new File("target/" + filename));
-            double distance = Images.distance(a, b);
-            System.out.println("distance=" + distance);
-            // TODO establish a reasonable threshold after running the tests on
-            // different platforms (windows, osx, linux, others?) and different
-            // jdks
-            double THRESHOLD = Images.DISTANCE_THRESHOLD;
-            assertTrue("actual and expected images for " + filename + " are different sizes!", distance >= 0);
-            assertTrue(
-                "distance=" + distance + " is above threshold=" + THRESHOLD
-                + ", images are probably significantly different, distance=" + distance,
-                distance <= THRESHOLD);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+  private static void check(String filename)
+  {
+    try
+    {
+      System.out.println("checking image " + filename);
+      BufferedImage a        = ImageIO.read(new File("src/test/resources/expected/" + filename));
+      BufferedImage b        = ImageIO.read(new File("target/" + filename));
+      double        distance = Images.distance(a, b);
+      System.out.println("distance=" + distance);
+      // TODO establish a reasonable threshold after running the tests on
+      // different platforms (windows, osx, linux, others?) and different
+      // jdks
+      double THRESHOLD = Images.DISTANCE_THRESHOLD;
+      assertTrue("actual and expected images for " + filename + " are different sizes!", distance >= 0);
+      assertTrue("distance=" + distance + " is above threshold=" + THRESHOLD
+                    + ", images are probably significantly different, distance=" + distance,
+                 distance <= THRESHOLD);
     }
+    catch (IOException e)
+    {
+      throw new RuntimeException(e);
+    }
+  }
 
 }

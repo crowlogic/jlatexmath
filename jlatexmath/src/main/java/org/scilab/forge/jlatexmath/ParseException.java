@@ -49,15 +49,20 @@ package org.scilab.forge.jlatexmath;
 /**
  * Signals that an error occured while parsing a string to a formula.
  */
-public class ParseException extends JMathTeXException {
+public class ParseException extends
+                            JMathTeXException
+{
 
-    private static final long serialVersionUID = -3498558910250213782L;
+  private static final long serialVersionUID = -3498558910250213782L;
 
-    public ParseException(String str, Throwable cause) {
-        super(str, cause);
-    }
+  public ParseException(String str, Throwable cause)
+  {
+    super(str,
+          cause);
+  }
 
-    public ParseException(String str) {
-        super(str);
-    }
+  public ParseException(String str)
+  {
+    super(str);
+  }
 }

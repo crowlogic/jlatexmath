@@ -51,13 +51,15 @@ package org.scilab.forge.jlatexmath;
  *
  * @author Kurt Vermeulen
  */
-public class FormulaNotFoundException extends JMathTeXException {
+public class FormulaNotFoundException extends
+                                      JMathTeXException
+{
 
-    private static final long serialVersionUID = 7660105446051204466L;
+  private static final long serialVersionUID = 7660105446051204466L;
 
-    protected FormulaNotFoundException(String name) {
-        super("There's no predefined TeXFormula with the name '" + name
-              + "' defined in '" + PredefinedTeXFormulaParser.RESOURCE_NAME
-              + "'!");
-    }
+  protected FormulaNotFoundException(String name)
+  {
+    super("There's no predefined TeXFormula with the name '" + name + "' defined in '"
+                  + PredefinedTeXFormulaParser.RESOURCE_NAME + "'!");
+  }
 }

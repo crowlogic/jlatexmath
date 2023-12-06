@@ -47,15 +47,19 @@
 package org.scilab.forge.jlatexmath;
 
 /**
- * Signals that an unknown symbol type constant or a symbol of the wrong type was used.
+ * Signals that an unknown symbol type constant or a symbol of the wrong type
+ * was used.
  *
  * @author Kurt Vermeulen
  */
-public class InvalidSymbolTypeException extends JMathTeXException {
+public class InvalidSymbolTypeException extends
+                                        JMathTeXException
+{
 
-    private static final long serialVersionUID = 6679471054726869590L;
+  private static final long serialVersionUID = 6679471054726869590L;
 
-    protected InvalidSymbolTypeException(String msg) {
-        super(msg);
-    }
+  protected InvalidSymbolTypeException(String msg)
+  {
+    super(msg);
+  }
 }
