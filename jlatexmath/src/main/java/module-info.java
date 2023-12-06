@@ -1,6 +1,6 @@
 module jlatexmath
 {
-  requires transitive java.base;
+  requires java.base;
   requires transitive java.desktop;
   requires transitive java.xml;
   
