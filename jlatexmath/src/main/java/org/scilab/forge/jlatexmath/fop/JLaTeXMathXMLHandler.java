@@ -60,31 +60,41 @@ import org.w3c.dom.Document;
 /**
  * XMLHandler which draws LaTeX through a fop G2DAdapter.
  */
-public class JLaTeXMathXMLHandler implements XMLHandler {
+public class JLaTeXMathXMLHandler implements
+                                  XMLHandler
+{
 
-    public JLaTeXMathXMLHandler() { }
+  public JLaTeXMathXMLHandler()
+  {
+  }
 
-    public void handleXML(RendererContext context, Document document, String ns) throws Exception {
-        Graphics2DAdapter g2dAdapter = context.getRenderer().getGraphics2DAdapter();
+  public void handleXML(RendererContext context, Document document, String ns) throws Exception
+  {
+    Graphics2DAdapter g2dAdapter = context.getRenderer().getGraphics2DAdapter();
 
-        if (g2dAdapter != null) {
-            g2dAdapter.paintImage(new Graphics2DImagePainterJLaTeXMath(document), context,
-                                  ((Integer) context.getProperty("xpos")).intValue(),
-                                  ((Integer) context.getProperty("ypos")).intValue(),
-                                  ((Integer) context.getProperty("width")).intValue(),
-                                  ((Integer) context.getProperty("height")).intValue());
-        }
+    if (g2dAdapter != null)
+    {
+      g2dAdapter.paintImage(new Graphics2DImagePainterJLaTeXMath(document),
+                            context,
+                            ((Integer) context.getProperty("xpos")).intValue(),
+                            ((Integer) context.getProperty("ypos")).intValue(),
+                            ((Integer) context.getProperty("width")).intValue(),
+                            ((Integer) context.getProperty("height")).intValue());
     }
+  }
 
-    public boolean supportsRenderer(Renderer renderer) {
-        return renderer.getGraphics2DAdapter() != null;
-    }
+  public boolean supportsRenderer(Renderer renderer)
+  {
+    return renderer.getGraphics2DAdapter() != null;
+  }
 
-    public String getMimeType() {
-        return JLaTeXMathObj.MIME_TYPE;
-    }
+  public String getMimeType()
+  {
+    return JLaTeXMathObj.MIME_TYPE;
+  }
 
-    public String getNamespace() {
-        return JLaTeXMathObj.JLATEXMATH_NS;
-    }
+  public String getNamespace()
+  {
+    return JLaTeXMathObj.JLATEXMATH_NS;
+  }
 }

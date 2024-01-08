@@ -58,28 +58,35 @@ import org.scilab.forge.jlatexmath.fop.JLaTeXMathObj;
 
 /**
  * Image implementation
+ * 
  * @author Calixte DENIZET
  */
-public class ImageJLaTeXMath extends AbstractImage {
+public class ImageJLaTeXMath extends
+                             AbstractImage
+{
 
-    public static final ImageFlavor FLAVOR = new ImageFlavor(JLaTeXMathObj.MIME_TYPE);
+  public static final ImageFlavor FLAVOR = new ImageFlavor(JLaTeXMathObj.MIME_TYPE);
 
-    private TeXIcon icon;
+  private TeXIcon                 icon;
 
-    public ImageJLaTeXMath(ImageInfo info, TeXIcon icon) {
-        super(info);
-        this.icon = icon;
-    }
+  public ImageJLaTeXMath(ImageInfo info, TeXIcon icon)
+  {
+    super(info);
+    this.icon = icon;
+  }
 
-    public TeXIcon getIcon() {
-        return icon;
-    }
+  public TeXIcon getIcon()
+  {
+    return icon;
+  }
 
-    public boolean isCacheable() {
-        return true;
-    }
+  public boolean isCacheable()
+  {
+    return true;
+  }
 
-    public ImageFlavor getFlavor() {
-        return FLAVOR;
-    }
+  public ImageFlavor getFlavor()
+  {
+    return FLAVOR;
+  }
 }

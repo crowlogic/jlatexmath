@@ -81,7 +81,7 @@ public class JLaTeXMathElement extends
   private float   size;
   private Color   fg;
   private TeXIcon icon     = null;
-  
+
   private String  PR_COLOR = "PR_COLOR";
 
   public JLaTeXMathElement(FONode parent)

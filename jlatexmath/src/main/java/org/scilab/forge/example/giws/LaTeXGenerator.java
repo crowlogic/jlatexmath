@@ -57,28 +57,37 @@ import org.scilab.forge.jlatexmath.TeXConstants;
 import org.scilab.forge.jlatexmath.TeXFormula;
 import org.scilab.forge.jlatexmath.TeXIcon;
 
-public class LaTeXGenerator {
+public class LaTeXGenerator
+{
 
-    public LaTeXGenerator() { }
+  public LaTeXGenerator()
+  {
+  }
 
-    /**
-     * Generate a PNG with the given path and LaTeX formula
-     * @param formula the formula to compile
-     * @param path the image path
-     */
-    public void generate(String formula, String path) throws IOException {
-        TeXFormula tf = new TeXFormula(formula);
-        TeXIcon ti = tf.createTeXIcon(TeXConstants.STYLE_DISPLAY, 40);
-        BufferedImage bimg = new BufferedImage(ti.getIconWidth(), ti.getIconHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+  /**
+   * Generate a PNG with the given path and LaTeX formula
+   * 
+   * @param formula the formula to compile
+   * @param path    the image path
+   */
+  public void generate(String formula, String path) throws IOException
+  {
+    TeXFormula    tf   = new TeXFormula(formula);
+    TeXIcon       ti   = tf.createTeXIcon(TeXConstants.STYLE_DISPLAY, 40);
+    BufferedImage bimg = new BufferedImage(ti.getIconWidth(),
+                                           ti.getIconHeight(),
+                                           BufferedImage.TYPE_4BYTE_ABGR);
 
-        Graphics2D g2d = bimg.createGraphics();
-        g2d.setColor(Color.white);
-        g2d.fillRect(0,0,ti.getIconWidth(),ti.getIconHeight());
-        JLabel jl = new JLabel();
-        jl.setForeground(new Color(0, 0, 0));
-        ti.paintIcon(jl, g2d, 0, 0);
+    Graphics2D    g2d  = bimg.createGraphics();
+    g2d.setColor(Color.white);
+    g2d.fillRect(0, 0, ti.getIconWidth(), ti.getIconHeight());
+    JLabel jl = new JLabel();
+    jl.setForeground(new Color(0,
+                               0,
+                               0));
+    ti.paintIcon(jl, g2d, 0, 0);
 
-        File out = new File(path);
-        ImageIO.write(bimg, "png", out);
-    }
+    File out = new File(path);
+    ImageIO.write(bimg, "png", out);
+  }
 }

@@ -64,35 +64,44 @@ import org.w3c.dom.Element;
 /**
  * @author Calixte DENIZET
  */
-public class Graphics2DImagePainterJLaTeXMath implements Graphics2DImagePainter {
+public class Graphics2DImagePainterJLaTeXMath implements
+                                              Graphics2DImagePainter
+{
 
-    private Dimension dim;
-    private TeXIcon icon;
+  private Dimension dim;
+  private TeXIcon   icon;
 
-    public Graphics2DImagePainterJLaTeXMath(Document doc) {
-        Element e = doc.getDocumentElement();
-        float size = Float.parseFloat(e.getAttribute("size"));
-        Color fg = new Color(Integer.parseInt(e.getAttribute("fg")));
-        icon = JLaTeXMathElement.calculate(doc, size);
-        icon.setForeground(fg);
-        dim = new Dimension((int) (icon.getTrueIconWidth() * 1000), (int) (icon.getTrueIconHeight() * 1000));
-    }
+  public Graphics2DImagePainterJLaTeXMath(Document doc)
+  {
+    Element e    = doc.getDocumentElement();
+    float   size = Float.parseFloat(e.getAttribute("size"));
+    Color   fg   = new Color(Integer.parseInt(e.getAttribute("fg")));
+    icon = JLaTeXMathElement.calculate(doc, size);
+    icon.setForeground(fg);
+    dim = new Dimension((int) (icon.getTrueIconWidth() * 1000),
+                        (int) (icon.getTrueIconHeight() * 1000));
+  }
 
-    public Graphics2DImagePainterJLaTeXMath(TeXIcon icon) {
-        this.icon = icon;
-        dim = new Dimension((int) (icon.getTrueIconWidth() * 1000), (int) (icon.getTrueIconHeight() * 1000));
-    }
+  public Graphics2DImagePainterJLaTeXMath(TeXIcon icon)
+  {
+    this.icon = icon;
+    dim       = new Dimension((int) (icon.getTrueIconWidth() * 1000),
+                              (int) (icon.getTrueIconHeight() * 1000));
+  }
 
-    public int getDepth() {
-        return (int) (icon.getTrueIconDepth() * 1000);
-    }
+  public int getDepth()
+  {
+    return (int) (icon.getTrueIconDepth() * 1000);
+  }
 
-    public Dimension getImageSize() {
-        return dim;
-    }
+  public Dimension getImageSize()
+  {
+    return dim;
+  }
 
-    public void paint(Graphics2D g2d, Rectangle2D rect2d) {
-        g2d.scale(rect2d.getWidth() / dim.width * 1000, rect2d.getHeight() / dim.height * 1000);
-        icon.paintIcon(null, g2d, (int) rect2d.getX(), (int) rect2d.getY());
-    }
+  public void paint(Graphics2D g2d, Rectangle2D rect2d)
+  {
+    g2d.scale(rect2d.getWidth() / dim.width * 1000, rect2d.getHeight() / dim.height * 1000);
+    icon.paintIcon(null, g2d, (int) rect2d.getX(), (int) rect2d.getY());
+  }
 }

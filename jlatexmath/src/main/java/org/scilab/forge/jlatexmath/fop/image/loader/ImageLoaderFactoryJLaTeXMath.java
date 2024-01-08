@@ -59,38 +59,49 @@ import org.scilab.forge.jlatexmath.fop.image.ImageJLaTeXMath;
 /**
  * @author Calixte DENIZET
  */
-public class ImageLoaderFactoryJLaTeXMath extends AbstractImageLoaderFactory {
+public class ImageLoaderFactoryJLaTeXMath extends
+                                          AbstractImageLoaderFactory
+{
 
-    private static final ImageFlavor[] FLAVORS = new ImageFlavor[] { ImageJLaTeXMath.FLAVOR };
-    private static final String[] MIMES = new String[] { JLaTeXMathObj.MIME_TYPE };
+  private static final ImageFlavor[] FLAVORS = new ImageFlavor[]
+  { ImageJLaTeXMath.FLAVOR };
+  private static final String[]      MIMES   = new String[]
+  { JLaTeXMathObj.MIME_TYPE };
 
-    /**
-     * Default Constructor.
-     */
-    public ImageLoaderFactoryJLaTeXMath() { }
+  /**
+   * Default Constructor.
+   */
+  public ImageLoaderFactoryJLaTeXMath()
+  {
+  }
 
-    /** {@inheritDoc} */
-    public String[] getSupportedMIMETypes() {
-        return ImageLoaderFactoryJLaTeXMath.MIMES.clone();
-    }
+  /** {@inheritDoc} */
+  public String[] getSupportedMIMETypes()
+  {
+    return ImageLoaderFactoryJLaTeXMath.MIMES.clone();
+  }
 
-    /** {@inheritDoc} */
-    public ImageFlavor[] getSupportedFlavors(final String mime) {
-        return ImageLoaderFactoryJLaTeXMath.FLAVORS.clone();
-    }
+  /** {@inheritDoc} */
+  public ImageFlavor[] getSupportedFlavors(final String mime)
+  {
+    return ImageLoaderFactoryJLaTeXMath.FLAVORS.clone();
+  }
 
-    /** {@inheritDoc} */
-    public ImageLoader newImageLoader(final ImageFlavor targetFlavor) {
-        return new ImageLoaderJLaTeXMath(targetFlavor);
-    }
+  /** {@inheritDoc} */
+  public ImageLoader newImageLoader(final ImageFlavor targetFlavor)
+  {
+    return new ImageLoaderJLaTeXMath(targetFlavor);
+  }
 
-    /** {@inheritDoc} */
-    public int getUsagePenalty(final String mime, final ImageFlavor flavor) {
-        return 0;
-    }
+  /** {@inheritDoc} */
+  public int getUsagePenalty(final String mime, final ImageFlavor flavor)
+  {
+    return 0;
+  }
 
-    /** {@inheritDoc} */
-    public boolean isAvailable() {
-        return true;
-    }
+  /** {@inheritDoc} */
+  public boolean isAvailable()
+  {
+    return true;
+  }
 }

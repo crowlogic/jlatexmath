@@ -53,20 +53,25 @@ package org.scilab.forge.jlatexmath.fop;
 import org.apache.fop.fo.FONode;
 import org.apache.fop.fo.XMLObj;
 
-public class JLaTeXMathObj extends XMLObj {
+public class JLaTeXMathObj extends
+                           XMLObj
+{
 
-    public static final String JLATEXMATH_NS = "http://forge.scilab.org/p/jlatexmath";
-    public static final String MIME_TYPE = "image/latex";
+  public static final String JLATEXMATH_NS = "http://forge.scilab.org/p/jlatexmath";
+  public static final String MIME_TYPE     = "image/latex";
 
-    public JLaTeXMathObj(FONode parent) {
-        super(parent);
-    }
+  public JLaTeXMathObj(FONode parent)
+  {
+    super(parent);
+  }
 
-    public String getNamespaceURI() {
-        return JLATEXMATH_NS;
-    }
+  public String getNamespaceURI()
+  {
+    return JLATEXMATH_NS;
+  }
 
-    public String getNormalNamespacePrefix() {
-        return "latex";
-    }
+  public String getNormalNamespacePrefix()
+  {
+    return "latex";
+  }
 }

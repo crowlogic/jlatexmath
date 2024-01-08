@@ -89,7 +89,7 @@ public class SpaceAtom extends
   {
 
     new UnitConversion()
-    {                                                                           // EM
+    {                                                                                    // EM
       public float getPixelConversion(TeXEnvironment env)
       {
         return env.getTeXFont().getEM(env.getStyle());
@@ -97,7 +97,7 @@ public class SpaceAtom extends
     },
 
     new UnitConversion()
-    {                                                                           // EX
+    {                                                                                    // EX
       public float getPixelConversion(TeXEnvironment env)
       {
         return env.getTeXFont().getXHeight(env.getStyle(), env.getLastFontId());
@@ -105,7 +105,7 @@ public class SpaceAtom extends
     },
 
     new UnitConversion()
-    {                                                                           // PIXEL
+    {                                                                                    // PIXEL
       public float getPixelConversion(TeXEnvironment env)
       {
         return 1 / env.getSize();
@@ -113,7 +113,7 @@ public class SpaceAtom extends
     },
 
     new UnitConversion()
-    {                                                                           // BP (or PostScript point)
+    {                                                                                    // BP (or PostScript point)
       public float getPixelConversion(TeXEnvironment env)
       {
         return TeXFormula.PIXELS_PER_POINT / env.getSize();
@@ -121,7 +121,7 @@ public class SpaceAtom extends
     },
 
     new UnitConversion()
-    {                                                                           // PICA
+    {                                                                                    // PICA
       public float getPixelConversion(TeXEnvironment env)
       {
         return (12 * TeXFormula.PIXELS_PER_POINT) / env.getSize();
@@ -129,7 +129,7 @@ public class SpaceAtom extends
     },
 
     new UnitConversion()
-    {                                                                           // MU
+    {                                                                                    // MU
       public float getPixelConversion(TeXEnvironment env)
       {
         TeXFont tf = env.getTeXFont();
@@ -138,7 +138,7 @@ public class SpaceAtom extends
     },
 
     new UnitConversion()
-    {                                                                           // CM
+    {                                                                                    // CM
       public float getPixelConversion(TeXEnvironment env)
       {
         return (28.346456693f * TeXFormula.PIXELS_PER_POINT) / env.getSize();
@@ -146,7 +146,7 @@ public class SpaceAtom extends
     },
 
     new UnitConversion()
-    {                                                                           // MM
+    {                                                                                    // MM
       public float getPixelConversion(TeXEnvironment env)
       {
         return (2.8346456693f * TeXFormula.PIXELS_PER_POINT) / env.getSize();
@@ -154,7 +154,7 @@ public class SpaceAtom extends
     },
 
     new UnitConversion()
-    {                                                                           // IN
+    {                                                                                    // IN
       public float getPixelConversion(TeXEnvironment env)
       {
         return (72 * TeXFormula.PIXELS_PER_POINT) / env.getSize();
@@ -162,7 +162,7 @@ public class SpaceAtom extends
     },
 
     new UnitConversion()
-    {                                                                           // SP
+    {                                                                                    // SP
       public float getPixelConversion(TeXEnvironment env)
       {
         return (65536 * TeXFormula.PIXELS_PER_POINT) / env.getSize();
@@ -170,8 +170,9 @@ public class SpaceAtom extends
     },
 
     new UnitConversion()
-    {                                                                           // PT (or Standard Anglo-American
-                                                                                // point)
+    {                                                                                    // PT (or Standard
+                                                                                         // Anglo-American
+                                                                                         // point)
       public float getPixelConversion(TeXEnvironment env)
       {
         return (.9962640099f * TeXFormula.PIXELS_PER_POINT) / env.getSize();
@@ -179,7 +180,7 @@ public class SpaceAtom extends
     },
 
     new UnitConversion()
-    {                                                                           // DD
+    {                                                                                    // DD
       public float getPixelConversion(TeXEnvironment env)
       {
         return (1.0660349422f * TeXFormula.PIXELS_PER_POINT) / env.getSize();
@@ -187,7 +188,7 @@ public class SpaceAtom extends
     },
 
     new UnitConversion()
-    {                                                                           // CC
+    {                                                                                    // CC
       public float getPixelConversion(TeXEnvironment env)
       {
         return (12.7924193070f * TeXFormula.PIXELS_PER_POINT) / env.getSize();
@@ -195,7 +196,7 @@ public class SpaceAtom extends
     },
 
     new UnitConversion()
-    {                                                                           // X8
+    {                                                                                    // X8
       public float getPixelConversion(TeXEnvironment env)
       {
         return env.getTeXFont().getDefaultRuleThickness(env.getStyle());
