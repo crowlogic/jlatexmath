@@ -1294,7 +1294,7 @@ public class TeXFormula
     }
   }
 
-  static class FontInfos
+  public static class FontInfos
   {
 
     String sansserif;

@@ -74,114 +74,152 @@ import org.w3c.dom.NamedNodeMap;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 
-public class JLaTeXMathElement extends JLaTeXMathObj {
+public class JLaTeXMathElement extends
+                               JLaTeXMathObj
+{
 
-    private float size;
-    private Color fg;
-    private TeXIcon icon = null;
-    private boolean bool = true;
-    private String PR_COLOR = "PR_COLOR";
+  private float   size;
+  private Color   fg;
+  private TeXIcon icon     = null;
+  
+  private String  PR_COLOR = "PR_COLOR";
 
-    public JLaTeXMathElement(FONode parent) {
-        super(parent);
+  public JLaTeXMathElement(FONode parent)
+  {
+    super(parent);
+  }
+
+  public void processNode(final String elementName,
+                          final Locator locator,
+                          final Attributes attlist,
+                          final PropertyList propertyList) throws FOPException
+  {
+    super.processNode(elementName, locator, attlist, propertyList);
+    Element e = createBasicDocument().getDocumentElement();
+    e.setAttribute("size", "" + size);
+    e.setAttribute("fg", "" + fg.getRGB());
+  }
+
+  public Point2D getDimension(Point2D p)
+  {
+    if (icon == null)
+    {
+      icon = calculate(doc, size);
+    }
+    return new Point2D.Float(icon.getTrueIconWidth(),
+                             icon.getTrueIconHeight());
+  }
+
+  public Length getIntrinsicAlignmentAdjust()
+  {
+    if (icon == null)
+    {
+      icon = calculate(doc, size);
+    }
+    return FixedLength.getInstance(-icon.getTrueIconDepth(), "px");
+  }
+
+  public static float getFWidth(String str)
+  {
+    StringTokenizer tok = new StringTokenizer(str,
+                                              ",");
+    int             sum = 0;
+    while (tok.hasMoreTokens())
+    {
+      int    i = 0;
+      String s = tok.nextToken();
+      for (; i < s.length() && !Character.isLetter(s.charAt(i)); i++)
+        ;
+      double w = 0;
+      try
+      {
+        w = Double.parseDouble(s.substring(0, i));
+      }
+      catch (NumberFormatException e)
+      {
+        return 0.0f;
+      }
+
+      String unit = "px";
+      if (i != s.length())
+      {
+        unit = s.substring(i).toLowerCase();
+      }
+
+      sum += FixedLength.getInstance(w, unit).getValue();
     }
 
-    public void processNode(final String elementName, final Locator locator,
-                            final Attributes attlist, final PropertyList propertyList)
-    throws FOPException {
-        super.processNode(elementName, locator, attlist, propertyList);
-        Element e = createBasicDocument().getDocumentElement();
-        e.setAttribute("size", "" + size);
-        e.setAttribute("fg", "" + fg.getRGB());
+    return (float) (sum / 1000f);
+  }
+
+  public static TeXIcon calculate(Document doc, float size)
+  {
+    TeXIcon icon;
+    Element e     = doc.getDocumentElement();
+    String  code  = e.getTextContent();
+    String  style = e.getAttribute("style");
+    int     st    = TeXConstants.STYLE_DISPLAY;
+    if ("text".equals(style))
+    {
+      st = TeXConstants.STYLE_TEXT;
+    }
+    else if ("script".equals(style))
+    {
+      st = TeXConstants.STYLE_SCRIPT;
+    }
+    else if ("script_script".equals(style))
+    {
+      st = TeXConstants.STYLE_SCRIPT_SCRIPT;
     }
 
-    public Point2D getDimension(Point2D p) {
-        if (icon == null) {
-            icon = calculate(doc, size);
-        }
-        return new Point2D.Float(icon.getTrueIconWidth(), icon.getTrueIconHeight());
+    NamedNodeMap        attributes = e.getAttributes();
+    int                 len        = attributes.getLength();
+    Map<String, String> map        = new HashMap<String, String>();
+    for (int i = 0; i < len; i++)
+    {
+      map.put(attributes.item(i).getNodeName(), attributes.item(i).getNodeValue());
     }
 
-    public Length getIntrinsicAlignmentAdjust() {
-        if (icon == null) {
-            icon = calculate(doc, size);
-        }
-        return FixedLength.getInstance(-icon.getTrueIconDepth(), "px");
+    String stfw = e.getAttribute("fwidth");
+    if (stfw.length() != 0)
+    {
+      icon = new TeXFormula(code,
+                            map).createTeXIcon(st,
+                                               size,
+                                               TeXConstants.UNIT_PIXEL,
+                                               getFWidth(stfw),
+                                               TeXConstants.ALIGN_CENTER);
+    }
+    else
+    {
+      icon = new TeXFormula(code,
+                            map).createTeXIcon(st, size, true);
     }
 
-    public static float getFWidth(String str) {
-        StringTokenizer tok = new StringTokenizer(str, ",");
-        int sum = 0;
-        while (tok.hasMoreTokens()) {
-            int i = 0;
-            String s = tok.nextToken();
-            for (; i < s.length() && !Character.isLetter(s.charAt(i)); i++);
-            double w = 0;
-            try {
-                w = Double.parseDouble(s.substring(0, i));
-            } catch (NumberFormatException e) {
-                return 0.0f;
-            }
+    return icon;
+  }
 
-            String unit = "px";
-            if (i != s.length()) {
-                unit = s.substring(i).toLowerCase();
-            }
+  protected PropertyList createPropertyList(final PropertyList pList,
+                                            final FOEventHandler foEventHandler) throws FOPException
+  {
+    FOUserAgent userAgent  = this.getUserAgent();
+    CommonFont  commonFont = pList.getFontProps();
+    this.size = (float) commonFont.fontSize.getNumericValue() / 1000;
 
-            sum += FixedLength.getInstance(w, unit).getValue();
-        }
-
-        return (float) (sum / 1000f);
+    int n = org.apache.fop.fo.Constants.PR_COLOR;
+    try
+    {
+      n = org.apache.fop.fo.Constants.class.getDeclaredField(PR_COLOR).getInt(null);
+    }
+    catch (Exception e)
+    {
+      System.err.println("Error in getting field:\n" + e);
     }
 
-    public static TeXIcon calculate(Document doc, float size) {
-        TeXIcon icon;
-        Element e = doc.getDocumentElement();
-        String code = e.getTextContent();
-        String style = e.getAttribute("style");
-        int st = TeXConstants.STYLE_DISPLAY;
-        if ("text".equals(style)) {
-            st = TeXConstants.STYLE_TEXT;
-        } else if ("script".equals(style)) {
-            st = TeXConstants.STYLE_SCRIPT;
-        } else if ("script_script".equals(style)) {
-            st = TeXConstants.STYLE_SCRIPT_SCRIPT;
-        }
+    Property colorProp = pList.get(n);
 
-        NamedNodeMap attributes = e.getAttributes();
-        int len = attributes.getLength();
-        Map<String, String> map = new HashMap<String, String>();
-        for (int i = 0; i < len; i++) {
-            map.put(attributes.item(i).getNodeName(), attributes.item(i).getNodeValue());
-        }
+    this.fg = colorProp != null ? colorProp.getColor(userAgent) : null;
 
-        String stfw = e.getAttribute("fwidth");
-        if (stfw.length() != 0) {
-            icon = new TeXFormula(code, map).createTeXIcon(st, size, TeXConstants.UNIT_PIXEL, getFWidth(stfw), TeXConstants.ALIGN_CENTER);
-        } else {
-            icon = new TeXFormula(code, map).createTeXIcon(st, size, true);
-        }
-
-        return icon;
-    }
-
-    protected PropertyList createPropertyList(final PropertyList pList,
-            final FOEventHandler foEventHandler) throws FOPException {
-        FOUserAgent userAgent = this.getUserAgent();
-        CommonFont commonFont = pList.getFontProps();
-        this.size = (float) commonFont.fontSize.getNumericValue() / 1000;
-
-        int n = org.apache.fop.fo.Constants.PR_COLOR;
-        try {
-            n = org.apache.fop.fo.Constants.class.getDeclaredField(PR_COLOR).getInt(null);
-        } catch (Exception e) {
-            System.err.println("Error in getting field:\n" + e);
-        }
-
-        Property colorProp = pList.get(n);
-
-        this.fg = colorProp != null ? colorProp.getColor(userAgent) : null;
-
-        return super.createPropertyList(pList, foEventHandler);
-    }
+    return super.createPropertyList(pList, foEventHandler);
+  }
 }

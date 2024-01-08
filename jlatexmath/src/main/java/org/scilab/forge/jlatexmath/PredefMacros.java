@@ -1541,11 +1541,6 @@ public class PredefMacros
     else
       nbArgs = Integer.parseInt(args[3]);
 
-    if (nbArgs == null)
-    {
-      throw new ParseException("The optional argument should be an integer !");
-    }
-
     if (args[4] == null)
       NewCommandMacro.addNewCommand(newcom.substring(1), args[2], nbArgs.intValue());
     else
@@ -1567,10 +1562,6 @@ public class PredefMacros
       nbArgs = new Integer(0);
     else
       nbArgs = Integer.parseInt(args[3]);
-
-    if (nbArgs == null)
-      throw new ParseException("The optional argument should be an integer !");
-
     NewCommandMacro.addReNewCommand(newcom.substring(1), args[2], nbArgs.intValue());
 
     return null;
@@ -1591,8 +1582,6 @@ public class PredefMacros
   public static final Atom newenvironment_macro(final TeXParser tp, final String[] args) throws ParseException
   {
     Integer opt = args[4] == null ? 0 : Integer.parseInt(args[4]);
-    if (opt == null)
-      throw new ParseException("The optional argument should be an integer !");
 
     NewEnvironmentMacro.addNewEnvironment(args[1], args[2], args[3], opt.intValue());
     return null;
@@ -1601,8 +1590,6 @@ public class PredefMacros
   public static final Atom renewenvironment_macro(final TeXParser tp, final String[] args) throws ParseException
   {
     Integer opt = args[4] == null ? 0 : Integer.parseInt(args[4]);
-    if (opt == null)
-      throw new ParseException("The optional argument should be an integer !");
 
     NewEnvironmentMacro.addReNewEnvironment(args[1], args[2], args[3], opt.intValue());
     return null;

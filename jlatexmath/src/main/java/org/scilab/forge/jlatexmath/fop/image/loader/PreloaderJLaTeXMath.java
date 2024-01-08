@@ -50,6 +50,8 @@
 
 package org.scilab.forge.jlatexmath.fop.image.loader;
 
+import static org.apache.xmlgraphics.image.loader.ImageInfo.ORIGINAL_IMAGE;
+
 import java.awt.Color;
 
 import javax.xml.transform.Source;
@@ -68,44 +70,57 @@ import org.w3c.dom.Element;
 
 /**
  * Preloader
+ * 
  * @author Calixte DENIZET
  */
-public class PreloaderJLaTeXMath extends AbstractImagePreloader {
+public class PreloaderJLaTeXMath extends
+                                 AbstractImagePreloader
+{
 
-    public PreloaderJLaTeXMath() { }
+  public PreloaderJLaTeXMath()
+  {
+  }
 
-    /** {@inheritDoc} */
-    public ImageInfo preloadImage(String uri, Source src, ImageContext context) {
-        Document doc;
-        Element e;
-        if (src instanceof DOMSource) {
-            doc = (Document) ((DOMSource) src).getNode();
-            e = doc.getDocumentElement();
-        } else {
-            return null;
-        }
-
-        if (!"latex".equals(e.getTagName())) {
-            return null;
-        }
-
-        ImageInfo info = new ImageInfo(uri, JLaTeXMathObj.MIME_TYPE);
-        ImageSize size = new ImageSize();
-
-        float s = Float.parseFloat(e.getAttribute("size"));
-        Color fg = new Color(Integer.parseInt(e.getAttribute("fg")));
-        TeXIcon icon = JLaTeXMathElement.calculate(doc, s);
-        icon.setForeground(fg);
-
-        size.setSizeInMillipoints((int) (icon.getTrueIconWidth() * 1000), (int) (icon.getTrueIconHeight() * 1000));
-        size.setBaselinePositionFromBottom((int) (icon.getTrueIconDepth() * 1000));
-        size.setResolution(context.getSourceResolution());
-        size.calcPixelsFromSize();
-        info.setSize(size);
-
-        ImageJLaTeXMath jlmImage = new ImageJLaTeXMath(info, icon);
-        info.getCustomObjects().put(ImageInfo.ORIGINAL_IMAGE, jlmImage);
-
-        return info;
+  /** {@inheritDoc} */
+  @SuppressWarnings("unchecked")
+  public ImageInfo preloadImage(String uri, Source src, ImageContext context)
+  {
+    Document doc;
+    Element  e;
+    if (src instanceof DOMSource)
+    {
+      doc = (Document) ((DOMSource) src).getNode();
+      e   = doc.getDocumentElement();
     }
+    else
+    {
+      return null;
+    }
+
+    if (!"latex".equals(e.getTagName()))
+    {
+      return null;
+    }
+
+    ImageInfo info = new ImageInfo(uri,
+                                   JLaTeXMathObj.MIME_TYPE);
+    ImageSize size = new ImageSize();
+
+    float     s    = Float.parseFloat(e.getAttribute("size"));
+    Color     fg   = new Color(Integer.parseInt(e.getAttribute("fg")));
+    TeXIcon   icon = JLaTeXMathElement.calculate(doc, s);
+    icon.setForeground(fg);
+
+    size.setSizeInMillipoints((int) (icon.getTrueIconWidth() * 1000), (int) (icon.getTrueIconHeight() * 1000));
+    size.setBaselinePositionFromBottom((int) (icon.getTrueIconDepth() * 1000));
+    size.setResolution(context.getSourceResolution());
+    size.calcPixelsFromSize();
+    info.setSize(size);
+
+    ImageJLaTeXMath jlmImage = new ImageJLaTeXMath(info,
+                                                   icon);
+    info.getCustomObjects().put(ORIGINAL_IMAGE, jlmImage);
+
+    return info;
+  }
 }

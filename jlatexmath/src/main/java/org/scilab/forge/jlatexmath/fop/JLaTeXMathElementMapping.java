@@ -59,35 +59,54 @@ import org.w3c.dom.DOMImplementation;
 /**
  * This class provides the element mapping for FOP.
  */
-public class JLaTeXMathElementMapping extends ElementMapping {
+public class JLaTeXMathElementMapping extends
+                                      ElementMapping
+{
 
-    public JLaTeXMathElementMapping() {
-        this.namespaceURI = JLaTeXMathObj.JLATEXMATH_NS;
+  public JLaTeXMathElementMapping()
+  {
+    this.namespaceURI = JLaTeXMathObj.JLATEXMATH_NS;
+  }
+
+  public DOMImplementation getDOMImplementation()
+  {
+    return ElementMapping.getDefaultDOMImplementation();
+  }
+
+  @SuppressWarnings("unchecked")
+  protected void initialize()
+  {
+    if (this.foObjs == null)
+    {
+      this.foObjs = new HashMap<String, Maker>();
+      this.foObjs.put("latex", new JLMEMaker());
+      this.foObjs.put(ElementMapping.DEFAULT, new JLMMaker());
+    }
+  }
+
+  public final class JLMMaker extends
+                              ElementMapping.Maker
+  {
+    private JLMMaker()
+    {
     }
 
-    public DOMImplementation getDOMImplementation() {
-        return ElementMapping.getDefaultDOMImplementation();
+    public FONode make(final FONode parent)
+    {
+      return new JLaTeXMathObj(parent);
+    }
+  }
+
+  public final class JLMEMaker extends
+                               ElementMapping.Maker
+  {
+    private JLMEMaker()
+    {
     }
 
-    protected void initialize() {
-        if (this.foObjs == null) {
-            this.foObjs = new HashMap();
-            this.foObjs.put("latex", new JLMEMaker());
-            this.foObjs.put(ElementMapping.DEFAULT, new JLMMaker());
-        }
+    public FONode make(final FONode parent)
+    {
+      return new JLaTeXMathElement(parent);
     }
-
-    public final class JLMMaker extends ElementMapping.Maker {
-        private JLMMaker() { }
-        public FONode make(final FONode parent) {
-            return new JLaTeXMathObj(parent);
-        }
-    }
-
-    public final class JLMEMaker extends ElementMapping.Maker {
-        private JLMEMaker() { }
-        public FONode make(final FONode parent) {
-            return new JLaTeXMathElement(parent);
-        }
-    }
+  }
 }

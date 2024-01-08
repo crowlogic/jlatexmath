@@ -66,8 +66,6 @@ public class UnderOverAtom extends
   private final float   overSpace;
 
   // units for the kerns
-  private final int     underUnit;      // NOPMD
-  // TODO: seems never to be used?
   private final int     overUnit;
 
   // whether the under- and overscript should be drawn in a smaller size
@@ -90,7 +88,6 @@ public class UnderOverAtom extends
     {
       this.under           = null;
       this.underSpace      = 0.0f;
-      this.underUnit       = 0;
       this.underScriptSize = false;
       this.over            = underOver;
       this.overUnit        = underOverUnit;
@@ -100,7 +97,6 @@ public class UnderOverAtom extends
     else
     {
       this.under           = underOver;
-      this.underUnit       = underOverUnit;
       this.underSpace      = underOverSpace;
       this.underScriptSize = underOverScriptSize;
       this.overSpace       = 0.0f;
@@ -127,7 +123,6 @@ public class UnderOverAtom extends
     // units valid
     this.base            = base;
     this.under           = under;
-    this.underUnit       = underUnit;
     this.underSpace      = underSpace;
     this.underScriptSize = underScriptSize;
     this.over            = over;

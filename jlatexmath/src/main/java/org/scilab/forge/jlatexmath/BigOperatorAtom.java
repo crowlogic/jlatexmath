@@ -186,7 +186,6 @@ public class BigOperatorAtom extends
       VerticalBox vBox   = new VerticalBox();
 
       float       bigop5 = tf.getBigOpSpacing5(style), kern = 0;
-      float       xh     = 0;                                   // TODO: check why this is not used // NOPMD
 
       // over
       if (over != null)
@@ -202,7 +201,6 @@ public class BigOperatorAtom extends
                               kern,
                               0,
                               0));
-        xh = vBox.getHeight() + vBox.getDepth();
       }
 
       // base

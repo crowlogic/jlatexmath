@@ -61,27 +61,37 @@ import org.scilab.forge.jlatexmath.fop.image.ImageJLaTeXMath;
 
 /**
  * Convert a LaTeX label to a Graphics2d Painter.
+ * 
  * @author Calixte DENIZET
  */
-public class ImageConverterJLaTeXMathToG2D extends AbstractImageConverter {
+public class ImageConverterJLaTeXMathToG2D extends
+                                           AbstractImageConverter
+{
 
-    /**
-     * Default Constructor.
-     */
-    public ImageConverterJLaTeXMathToG2D() { }
+  /**
+   * Default Constructor.
+   */
+  public ImageConverterJLaTeXMathToG2D()
+  {
+  }
 
-    /** {@inheritDoc} */
-    public Image convert(Image src, Map hints) throws ImageException {
-        return new ImageGraphics2D(src.getInfo(), new Graphics2DImagePainterJLaTeXMath(((ImageJLaTeXMath) src).getIcon()));
-    }
+  /** {@inheritDoc} */
+  @SuppressWarnings("rawtypes")
+  public Image convert(Image src, Map hints) throws ImageException
+  {
+    return new ImageGraphics2D(src.getInfo(),
+                               new Graphics2DImagePainterJLaTeXMath(((ImageJLaTeXMath) src).getIcon()));
+  }
 
-    /** {@inheritDoc} */
-    public ImageFlavor getSourceFlavor() {
-        return ImageJLaTeXMath.FLAVOR;
-    }
+  /** {@inheritDoc} */
+  public ImageFlavor getSourceFlavor()
+  {
+    return ImageJLaTeXMath.FLAVOR;
+  }
 
-    /** {@inheritDoc} */
-    public ImageFlavor getTargetFlavor() {
-        return ImageFlavor.GRAPHICS2D;
-    }
+  /** {@inheritDoc} */
+  public ImageFlavor getTargetFlavor()
+  {
+    return ImageFlavor.GRAPHICS2D;
+  }
 }

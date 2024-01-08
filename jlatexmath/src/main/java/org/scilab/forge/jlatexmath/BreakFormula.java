@@ -73,8 +73,8 @@ public final class BreakFormula
     HorizontalBox   first;
     HorizontalBox   second    = null;
     Stack<Position> positions = new Stack<Position>();
-    float           w         = -1;
-    while (hbox.width > width && (w = canBreak(positions, hbox, width)) != hbox.width)
+
+    while (hbox.width > width && (canBreak(positions, hbox, width)) != hbox.width)
     {
       Position        pos    = positions.pop();
       HorizontalBox[] hboxes = pos.hbox.split(pos.index - 1);

@@ -59,7 +59,6 @@ public class HorizontalBox extends
                            Box
 {
 
-  private float           curPos = 0;    // NOPMD
   protected List<Integer> breakPositions;
 
   public HorizontalBox(Box b, float w, int alignment)

@@ -76,7 +76,6 @@ public class HdotsforAtom extends
     Box b;
     if (w != 0)
     {
-      float dw = db.getWidth();
       b = new HorizontalBox(db);
       while (b.getWidth() < w)
       {

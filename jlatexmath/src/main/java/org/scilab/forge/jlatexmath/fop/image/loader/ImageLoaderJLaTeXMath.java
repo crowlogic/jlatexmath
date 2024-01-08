@@ -53,47 +53,52 @@ package org.scilab.forge.jlatexmath.fop.image.loader;
 import java.io.IOException;
 import java.util.Map;
 
-import org.apache.xmlgraphics.image.loader.Image;
-import org.apache.xmlgraphics.image.loader.ImageException;
-import org.apache.xmlgraphics.image.loader.ImageFlavor;
-import org.apache.xmlgraphics.image.loader.ImageInfo;
-import org.apache.xmlgraphics.image.loader.ImageSessionContext;
+import org.apache.xmlgraphics.image.loader.*;
 import org.apache.xmlgraphics.image.loader.impl.AbstractImageLoader;
 import org.scilab.forge.jlatexmath.fop.JLaTeXMathObj;
 import org.scilab.forge.jlatexmath.fop.image.ImageJLaTeXMath;
 
-public class ImageLoaderJLaTeXMath extends AbstractImageLoader {
+public class ImageLoaderJLaTeXMath extends
+                                   AbstractImageLoader
+{
 
-    private final ImageFlavor targetFlavor;
+  private final ImageFlavor targetFlavor;
 
-    /**
-     * Main constructor.
-     */
-    public ImageLoaderJLaTeXMath(final ImageFlavor target) {
-        if (!(ImageJLaTeXMath.FLAVOR.equals(target))) {
-            throw new IllegalArgumentException("Unsupported target ImageFlavor: " + target);
-        }
-        this.targetFlavor = target;
+  /**
+   * Main constructor.
+   */
+  public ImageLoaderJLaTeXMath(final ImageFlavor target)
+  {
+    if (!(ImageJLaTeXMath.FLAVOR.equals(target)))
+    {
+      throw new IllegalArgumentException("Unsupported target ImageFlavor: " + target);
+    }
+    this.targetFlavor = target;
+  }
+
+  /** {@inheritDoc} */
+  public ImageFlavor getTargetFlavor()
+  {
+    return this.targetFlavor;
+  }
+
+  /** {@inheritDoc} */
+  @SuppressWarnings("rawtypes")
+  public Image loadImage(ImageInfo info, Map hints, ImageSessionContext session) throws ImageException, IOException
+  {
+    if (!JLaTeXMathObj.MIME_TYPE.equals(info.getMimeType()))
+    {
+      throw new IllegalArgumentException("ImageInfo must be from an LaTeX image");
     }
 
-    /** {@inheritDoc} */
-    public ImageFlavor getTargetFlavor() {
-        return this.targetFlavor;
+    final Image img = info.getOriginalImage();
+    if (!(img instanceof ImageJLaTeXMath))
+    {
+      throw new IllegalArgumentException("ImageInfo was expected to contain the JLaTeXMath image");
     }
 
-    /** {@inheritDoc} */
-    public Image loadImage(ImageInfo info, Map hints, ImageSessionContext session) throws ImageException, IOException {
-        if (!JLaTeXMathObj.MIME_TYPE.equals(info.getMimeType())) {
-            throw new IllegalArgumentException("ImageInfo must be from an LaTeX image");
-        }
+    ImageJLaTeXMath jlmImage = (ImageJLaTeXMath) img;
 
-        final Image img = info.getOriginalImage();
-        if (!(img instanceof ImageJLaTeXMath)) {
-            throw new IllegalArgumentException("ImageInfo was expected to contain the JLaTeXMath image");
-        }
-
-        ImageJLaTeXMath jlmImage = (ImageJLaTeXMath) img;
-
-        return jlmImage;
-    }
+    return jlmImage;
+  }
 }

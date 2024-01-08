@@ -88,6 +88,7 @@ public class PredefinedTeXFormulaParser
          type);
   }
 
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   public void parse(Map predefinedTeXFormulas)
   {
     // get required string attribute
