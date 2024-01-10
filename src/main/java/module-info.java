@@ -5,6 +5,7 @@ module jlatexmath
   requires transitive java.xml;
   requires transitive fop;
   requires transitive xmlgraphics.commons;
+  requires transitive fop.core;
 
   exports org.scilab.forge.jlatexmath;
   exports org.scilab.forge.jlatexmath.cache;
