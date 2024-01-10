@@ -3,8 +3,8 @@ module jlatexmath
   requires java.base;
   requires transitive java.desktop;
   requires transitive java.xml;
-  requires transitive xmlgraphics.commons;
   requires transitive fop;
+  requires transitive xmlgraphics.commons;
 
   exports org.scilab.forge.jlatexmath;
   exports org.scilab.forge.jlatexmath.cache;
