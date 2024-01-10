@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.scilab.forge</groupId>
-	<version>1.0.7	</version>
+	<version>1.0.7</version>
 	<artifactId>jlatexmath</artifactId>
 	<packaging>jar</packaging>
 	<name>${project.artifactId}</name>
