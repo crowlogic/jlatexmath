@@ -11,6 +11,8 @@
 	<description>A Java API to render LaTeX</description>
 	<properties>
 		<jmh.version>1.19</jmh.version>
+		<maven.compiler.source>21</maven.compiler.source>
+		<maven.compiler.target>21</maven.compiler.target>	
 	</properties>
 
 	<dependencies>
@@ -44,5 +46,5 @@
 			<version>4.12</version>
 		</dependency>
 	</dependencies>
-	
+
 </project>
